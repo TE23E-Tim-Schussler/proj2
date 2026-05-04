@@ -8,11 +8,21 @@ package proj2;
     import java.nio.file.*;
     import java.io.IOException;
     import java.util.ArrayList;
+    //*Här importeras vissa bibliotek som kan behövas i projektet,
+    // detta görs här eftersom det är ursprungsklassen och därför behöver inga bibliotek hämtas
+    // senare i andra klassar */
 public class Template {
+    //*
+    // Denna klass fungerar som ursprung för alla andra med endast nödvändiga
+    // egenskaper (id:et och ifall den är tillgänglig) 
+    // */
     public String id = "";
+    public boolean isAvailible = true;
 
-    public Template(String id){
+    public Template(String id, boolean isAvailible){
         this.id = id;
+        this.isAvailible = isAvailible;
+
     }
 
 }
