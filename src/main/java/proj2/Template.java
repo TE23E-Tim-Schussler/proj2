@@ -9,5 +9,10 @@ package proj2;
     import java.io.IOException;
     import java.util.ArrayList;
 public class Template {
+    public String id = "";
+
+    public Template(String id){
+        this.id = id;
+    }
 
 }
