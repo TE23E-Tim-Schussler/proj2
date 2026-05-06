@@ -24,5 +24,8 @@ public class Template {
         this.isAvailible = isAvailible;
 
     }
+    public boolean checkAvailibility(){
+        return isAvailible;
+    }
 
 }

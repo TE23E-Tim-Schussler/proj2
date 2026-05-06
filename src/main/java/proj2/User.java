@@ -1,5 +1,5 @@
 package proj2;
-
+//*Detta är en klass för användare */
 public class User{
 public String id;
 public String name;
