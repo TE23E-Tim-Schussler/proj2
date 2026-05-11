@@ -27,5 +27,12 @@ public class Template {
     public boolean checkAvailibility(){
         return isAvailible;
     }
+    public void toggleIA() {
+        if (this.isAvailible == true){
+            this.isAvailible = false;
+        } else{
+            this.isAvailible = true;
+        }
+    }
 
 }
