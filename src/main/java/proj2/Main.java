@@ -5,7 +5,8 @@ package proj2;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
-        Book Testing = new Book("123","Epic","Epicman","Epicgenre",123,true);
-        System.out.println(Testing.checkAvailibility());
+        // Testkod
+    // Book Testing = new Book("123","Epic","Epicman","Epicgenre",123,true);
+    //   System.out.println(Testing.checkAvailibility());
     }
 }

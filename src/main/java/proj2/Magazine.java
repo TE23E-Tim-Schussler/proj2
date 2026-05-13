@@ -1,5 +1,5 @@
 package proj2;
-
+//*Klass för magasin (serietidningar) */
 public class Magazine extends Template{
 public String title = "";
 public int issueNumber = 0;
