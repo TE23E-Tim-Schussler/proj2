@@ -12,32 +12,17 @@ import java.util.Scanner;
 public class Main {
     
     public static void main(String[] args) {
-            Console cnsl = System.console();
+        int input;
             while(true){
-        System.out.println("""
-          Library!
-          1. Visitor mode
-          2. Librarian mode
-          3. Admin mode 
-          4. Exit     
-        """);       
-            String input = cnsl.readLine();
-            int mode = Integer.parseInt(input);
-            if (mode == 1) {
-                System.out.println("""
-                    1. Borrow book
-                    2. Sign up
-                    3. Exit
-                """);
-            } if (mode == 2){
-
-            } if (mode == 3){
-
-            } else {
-                System.out.println("Error try again!");
-                System.out.println(mode);
-            }
+                try{
+                input = Integer.parseInt(getInput());
+                break;
+                } catch (Exception e) {
+                    System.out.println("Please enter a valid number!");
+                    continue;
+                }       
         }
+        System.out.println(input);
 
 
         // Testkod
@@ -46,8 +31,14 @@ public class Main {
 
 
     }
-    public void getBook(){
-        Unirest.get("http://10.151.168.5:3146/books/");
+    public static String getInput(){
+        
+            String input;
+                Scanner scanner = new Scanner(System.in);
+        
+             input = scanner.nextLine();
+             return input;
 
     }
+
 }
