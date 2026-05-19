@@ -13,6 +13,14 @@ public class Main {
     
     public static void main(String[] args) {
         int input;
+            System.out.println("""
+                    Library!
+                    1.Borrow book
+                    2.Sign up
+                    3.Log in
+                    4.Exit
+                    """);
+                    while(true){
             while(true){
                 try{
                 input = Integer.parseInt(getInput());
@@ -21,8 +29,13 @@ public class Main {
                     System.out.println("Please enter a valid number!");
                     continue;
                 }       
+            }
+            if (input == 4){
+                break;
+            } if (input == 1) {
+                System.out.println("Enter book ID:");
+            }
         }
-        System.out.println(input);
 
 
         // Testkod
