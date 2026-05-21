@@ -45,9 +45,7 @@ public class Main {
                     continue;
                 }       
             }
-            if (input == 6){
-                break;
-            } if (input == 1) {
+            if (input == 1) {
                 System.out.println("Hold on...");
                 
                     //Här läser vi in JSON filen som hittas vid länken
@@ -85,7 +83,7 @@ public class Main {
                                         
 
                     
-                } if (input == 2){
+                 if (input == 2){
                     System.out.println("Hold on...");
                 
                     //Här läser vi in JSON filen som hittas vid länken
@@ -138,11 +136,32 @@ public class Main {
             }
 
             } if (input == 4){
+                System.out.println("Enter id:");
+                String Pid = getInput();
+                System.out.println("Enter title:");
+                String Ptitle = getInput();
+                System.out.println("Enter author:");
+                String Pauthor = getInput();
+                System.out.println("Enter genre:");
+                String Pgenre = getInput();
+                System.out.println("Enter pages:");
+                int Ppages = 0;
+                try{
+                Ppages = Integer.parseInt(getInput());
+                if (Ppages < 1){
+                    System.out.println("Must enter a valid number!");
+                }
+                } catch (Exception e){
+                    System.out.println("Must enter a valid number!");
+                }
                 JsonNode response = Unirest.get("http://10.151.168.5:3146/books/")
                 .asJson()
                 .getBody();
+                Book boook = new Book(Pid,Ptitle,Pauthor,Pgenre,Ppages,true);
+                Unirest.post("http://10.151.168.5:3146/books/");
 
             }
+        }
     }
 }
 
