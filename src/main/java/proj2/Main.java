@@ -1,5 +1,6 @@
 package proj2;
 
+import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.json.JSONArray;
@@ -157,13 +158,36 @@ public class Main {
                 JsonNode response = Unirest.get("http://10.151.168.5:3146/books/")
                 .asJson()
                 .getBody();
-                Book boook = new Book(Pid,Ptitle,Pauthor,Pgenre,Ppages,true);
-                Unirest.post("http://10.151.168.5:3146/books/");
+                Book newBook = new Book(Pid,Ptitle,Pauthor,Pgenre,Ppages,true);
+                HttpResponse<String> postResponse;
+                String jsonBody = gson.toJson(newBook);
+                try{
+                    postResponse = Unirest.post("http://10.151.168.5:3146/books/")
+                    .header("Content-Type","application/json")
+                    .body(jsonBody)
+                    .asString();
+                
+                } catch (Exception e){
+                    System.out.println("Ett fel uppstod!");
+                }
+            } if (input == 5){
+                                System.out.println("Enter id:");
+                String Pid = getInput();
+                System.out.println("Enter title:");
+                String Ptitle = getInput();
+                System.out.println("Enter author:");
+                String Pauthor = getInput();
+                System.out.println("Enter genre:");
+                String Pgenre = getInput();
+                System.out.println("Enter pages:");
+                int Ppages = 0;
+            }
 
             }
         }
     }
-}
+
+
 
     // Testkod
     // Book Testing = new Book("123","Epic","Epicman","Epicgenre",123,true);
