@@ -1,24 +1,38 @@
 package proj2;
+
+import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
+import kong.unirest.json.JSONArray;
+import kong.unirest.json.JSONObject;
 
-import java.io.Console;
+import com.google.gson.*;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import java.util.*;
-import java.util.Scanner;
-
 
 //*
 // Detta är huvuddelen för projektet
 // Tim TE23E */
 public class Main {
-    
+
     public static void main(String[] args) {
+        Gson gson = new Gson();
         int input;
+        while(true){
+            //Här är huvudmenyn för biblioteket
             System.out.println("""
-                    Library!
-                    1.Get list
-                    2.Sign up
-                    3.Log in
-                    4.Exit
+                    [Bibliotek!!!]
+                    /////////////////////
+                    1.Hämta böcker
+                    2.Hämta tidningar
+                    3.Skriv ut hämtade böcker och tidningar
+                    4.Lägg till bok
+                    5.Lägg till tidning
+                    6.Avsluta
+                    /////////////////////
                     """);
                     while(true){
             while(true){
@@ -26,31 +40,123 @@ public class Main {
                 input = Integer.parseInt(getInput());
                 break;
                 } catch (Exception e) {
+                    // Bara ett felmeddelande
                     System.out.println("Please enter a valid number!");
                     continue;
                 }       
             }
-            if (input == 4){
+            if (input == 6){
                 break;
             } if (input == 1) {
+                System.out.println("Hold on...");
                 
-            }
+                    //Här läser vi in JSON filen som hittas vid länken
+                    JsonNode response = Unirest.get("http://10.151.168.5:3146/books/")
+                    .asJson()
+                    .getBody();
+                    JSONArray array = response.getArray();
+                    ArrayList<Book> books = new ArrayList<>();
+
+                    // För varje objekt man kan hitta i länken så läggs ett till bojekt in i arraylistan
+                    for (int i = 0; i < array.length(); i++){
+                        JSONObject obj = array.getJSONObject(i);
+                        Book book = new Book(
+                            obj.getString("id"),
+                            obj.getString("title"),
+                            obj.getString("author"),
+                            obj.getString("genre"),
+                            obj.getInt("pages"),
+                            obj.getBoolean("isAvailable")
+                        );
+                        books.add(book);
+
+                        try (Writer writer = new FileWriter("books.json")) {
+                        gson.toJson(books, writer); 
+                        } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                        }
+
+                    }
+                       for (Book book : books) {
+                        System.out.println(book.title);
+                    }
         }
 
+                                        
 
-        // Testkod
-    // Book Testing = new Book("123","Epic","Epicman","Epicgenre",123,true);
-    //   System.out.println(Testing.checkAvailibility());
+                    
+                } if (input == 2){
+                    System.out.println("Hold on...");
+                
+                    //Här läser vi in JSON filen som hittas vid länken
+                    JsonNode response = Unirest.get("http://10.151.168.5:3146/magazines/")
+                    .asJson()
+                    .getBody();
 
+                    JSONArray array = response.getArray();
+                    ArrayList<Magazine> magazines = new ArrayList<>();
+                    // För varje objekt man kan hitta i länken så läggs ett till bojekt in i arraylistan
+                    for (int i = 0; i < array.length(); i++){
+                        JSONObject obj = array.getJSONObject(i);
+                        Magazine magazine = new Magazine(
+                            obj.getString("id"),
+                            obj.getString("title"),
+                            obj.getInt("issueNumber"),
+                            obj.getString("category"),
+                            obj.getInt("publishedYear"),
+                            obj.getBoolean("isAvailable")
+                        );
+                        magazines.add(magazine);
 
+                        try (Writer writer = new FileWriter("magazines.json")) {
+                        gson.toJson(magazines, writer); 
+                        } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                        }
+
+                    }
+                    for (Magazine magazine : magazines) {
+                        System.out.println(magazine.title+" issue: "+magazine.issueNumber);
+                }   
+            } if (input == 3){
+                
+                try (Reader reader = new FileReader("books.json")) {
+             JsonArray jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
+                for (JsonElement element : jsonArray) {
+                    System.out.println(element);
+                }
+            } catch (IOException e){
+                System.out.println("Ett fel uppstod!");
+            }
+            try (Reader reader = new FileReader("magazines.json")) {
+             JsonArray jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
+                for (JsonElement element : jsonArray) {
+                    System.out.println(element);
+                }
+            } catch (IOException e){
+                System.out.println("Ett fel uppstod!");
+            }
+
+            } if (input == 4){
+                JsonNode response = Unirest.get("http://10.151.168.5:3146/books/")
+                .asJson()
+                .getBody();
+
+            }
     }
-    public static String getInput(){
-        
-            String input;
-                Scanner scanner = new Scanner(System.in);
-        
-             input = scanner.nextLine();
-             return input;
+}
+
+    // Testkod
+    // Book Testing = new Book("123","Epic","Epicman","Epicgenre",123,true);
+    // System.out.println(Testing.checkAvailibility());
+
+    public static String getInput() {
+
+        String input;
+        Scanner scanner = new Scanner(System.in);
+
+        input = scanner.nextLine();
+        return input;
 
     }
 
