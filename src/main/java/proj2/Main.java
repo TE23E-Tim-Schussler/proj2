@@ -15,7 +15,7 @@ public class Main {
         int input;
             System.out.println("""
                     Library!
-                    1.Borrow book
+                    1.Get list
                     2.Sign up
                     3.Log in
                     4.Exit
@@ -33,7 +33,7 @@ public class Main {
             if (input == 4){
                 break;
             } if (input == 1) {
-                System.out.println("Enter book ID:");
+                
             }
         }
 
