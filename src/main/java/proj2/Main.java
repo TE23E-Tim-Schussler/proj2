@@ -175,12 +175,43 @@ public class Main {
                 String Pid = getInput();
                 System.out.println("Enter title:");
                 String Ptitle = getInput();
-                System.out.println("Enter author:");
-                String Pauthor = getInput();
-                System.out.println("Enter genre:");
-                String Pgenre = getInput();
-                System.out.println("Enter pages:");
-                int Ppages = 0;
+                System.out.println("Enter issue number:");
+                int Pissue = 0;
+                Pissue = Integer.parseInt(getInput());
+                try{
+                if (Pissue < 1){
+                    System.out.println("Must enter a valid number!");
+                }
+                } catch (Exception e){
+                    System.out.println("Must enter a valid number!");
+                }
+                System.out.println("Enter category:");
+                String Pcategory = getInput();
+                System.out.println("Enter published year:");
+                int PpublishedYear = 0;
+                try{
+                    PpublishedYear = Integer.parseInt(getInput());
+                if (PpublishedYear < 1){
+                    System.out.println("Must enter a valid number!");
+                }
+                } catch (Exception e){
+                    System.out.println("Must enter a valid number!");
+                }
+                JsonNode response = Unirest.get("http://10.151.168.5:3146/magazines/")
+                .asJson()
+                .getBody();
+                Magazine newMagazine = new Magazine(Pid,Ptitle,Pissue,Pcategory,PpublishedYear,true);
+                HttpResponse<String> postResponse;
+                String jsonBody = gson.toJson(newMagazine);
+                try{
+                    postResponse = Unirest.post("http://10.151.168.5:3146/magazines/")
+                    .header("Content-Type","application/json")
+                    .body(jsonBody)
+                    .asString();
+                
+                } catch (Exception e){
+                    System.out.println("Ett fel uppstod!");
+                }
             }
 
             }
