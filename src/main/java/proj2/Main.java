@@ -35,7 +35,7 @@ public class Main {
                     6.Avsluta
                     /////////////////////
                     """);
-                    while(true){
+                    
             while(true){
                 try{
                 input = Integer.parseInt(getInput());
@@ -212,11 +212,13 @@ public class Main {
                 } catch (Exception e){
                     System.out.println("Ett fel uppstod!");
                 }
+            } if (input== 6){
+                break;
             }
 
             }
         }
-    }
+    
 
 
 
