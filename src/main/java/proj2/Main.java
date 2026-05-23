@@ -115,10 +115,11 @@ public class Main {
 
                     }
                     for (Magazine magazine : magazines) {
+                        // Skriver ut alla magazin och deras serienummer
                         System.out.println(magazine.title+" issue: "+magazine.issueNumber);
                 }   
             } if (input == 3){
-                
+                //Läser upp alla objekt i books.json
                 try (Reader reader = new FileReader("books.json")) {
              JsonArray jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
                 for (JsonElement element : jsonArray) {
@@ -127,6 +128,7 @@ public class Main {
             } catch (IOException e){
                 System.out.println("Ett fel uppstod!");
             }
+            //Läser upp alla objekt magazines.json
             try (Reader reader = new FileReader("magazines.json")) {
              JsonArray jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
                 for (JsonElement element : jsonArray) {
@@ -136,7 +138,8 @@ public class Main {
                 System.out.println("Ett fel uppstod!");
             }
 
-            } if (input == 4){
+            } if (input == 4){ 
+                // Här får man skriva in argument för ens nya bokklass
                 System.out.println("Enter id:");
                 String Pid = getInput();
                 System.out.println("Enter title:");
@@ -148,6 +151,7 @@ public class Main {
                 System.out.println("Enter pages:");
                 int Ppages = 0;
                 try{
+                    // Ser så att det finns sidor i boken
                 Ppages = Integer.parseInt(getInput());
                 if (Ppages < 1){
                     System.out.println("Must enter a valid number!");
@@ -155,9 +159,11 @@ public class Main {
                 } catch (Exception e){
                     System.out.println("Must enter a valid number!");
                 }
+                // Skapar ett nytt request till servern
                 JsonNode response = Unirest.get("http://10.151.168.5:3146/books/")
                 .asJson()
                 .getBody();
+                // Skapar bokklass med parametrarna ovan som argument
                 Book newBook = new Book(Pid,Ptitle,Pauthor,Pgenre,Ppages,true);
                 HttpResponse<String> postResponse;
                 String jsonBody = gson.toJson(newBook);
@@ -171,7 +177,8 @@ public class Main {
                     System.out.println("Ett fel uppstod!");
                 }
             } if (input == 5){
-                                System.out.println("Enter id:");
+                // Här skriver du in argument för en ny magazinklass
+                System.out.println("Enter id:");
                 String Pid = getInput();
                 System.out.println("Enter title:");
                 String Ptitle = getInput();
@@ -197,9 +204,11 @@ public class Main {
                 } catch (Exception e){
                     System.out.println("Must enter a valid number!");
                 }
+                // Skapar koppling till servern
                 JsonNode response = Unirest.get("http://10.151.168.5:3146/magazines/")
                 .asJson()
                 .getBody();
+                // Skapar en ny magazinklass och laddar upp den på servern
                 Magazine newMagazine = new Magazine(Pid,Ptitle,Pissue,Pcategory,PpublishedYear,true);
                 HttpResponse<String> postResponse;
                 String jsonBody = gson.toJson(newMagazine);
@@ -213,6 +222,7 @@ public class Main {
                     System.out.println("Ett fel uppstod!");
                 }
             } if (input== 6){
+                // Avslutar loopen
                 break;
             }
 
